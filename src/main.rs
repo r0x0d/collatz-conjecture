@@ -13,15 +13,9 @@ fn save_results(seed: usize, previous_results: Vec<usize>) {
     let path = Path::new(path);
 
     // Open a file in write-only mode, returns `io::Result<File>`
-    File::create(path).expect("Couldn't create file");
-    let mut file = OpenOptions::new()
-        .write(true)
-        .append(true)
-        .open(path)
-        .unwrap();
-    
+    let mut file = File::create(path).expect("Couldn't create file");
     for i in &previous_results {
-        writeln!(file, "{:?}", &i.to_le_bytes()[0]);
+        write!(file, "{:?},", &i.to_le_bytes()[0]);
     }
 }
 
